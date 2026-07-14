@@ -1,14 +1,14 @@
 package user;
 
+import user.server.UserServer;
+
 public class Main {
-    package user;
 
-    public class Main {
+    public static void main(String[] args) throws Exception {
 
-        public static void main(String[] args) {
+        UserServer server = new UserServer();
 
-            System.out.println("User Service starting...");
+        server.start();
 
-        }
     }
 }
