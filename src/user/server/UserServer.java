@@ -45,15 +45,19 @@ public class UserServer {
             );
 
 
-            writer.println("HTTP/1.1 200 OK");
-            writer.println("Content-Type: application/json");
-            writer.println();
-
             List<User> users = userRepository.findAll();
 
             String json = JsonUtil.usersToJson(users);
+
+
+
+            writer.println("HTTP/1.1 200 OK");
+            writer.println("Content-Type: application/json");
+            writer.println("Content-Length: " + json.getBytes().length);
+            writer.println();
             writer.println(json);
 
+            writer.flush();
 
             clientSocket.close();
         }
