@@ -1,26 +1,51 @@
 package user.repository;
 
+import user.database.DatabaseConnection;
 import user.model.User;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository {
 
-    private final List<User> users = new ArrayList<>();
-
-
-    public UserRepository() {
-
-        users.add(new User(1, "Janko"));
-        users.add(new User(2, "Marko"));
-
-    }
-
 
     public List<User> findAll() {
 
-        return users;
+        List<User> users = new ArrayList<>();
 
+        String sql = "SELECT id, name FROM users";
+
+
+        try (
+                Connection connection =
+                        DatabaseConnection.getConnection();
+
+                Statement statement =
+                        connection.createStatement();
+
+                ResultSet result =
+                        statement.executeQuery(sql)
+        ) {
+
+
+            while (result.next()) {
+
+                User user = new User(
+                        result.getInt("id"),
+                        result.getString("name")
+                );
+
+                users.add(user);
+            }
+
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+
+        return users;
     }
 }
