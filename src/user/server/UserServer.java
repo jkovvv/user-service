@@ -64,8 +64,12 @@ public class UserServer {
 
             String json;
 
+            if (method.equals("GET") && path.equals("/health")) {
 
-            if (method.equals("GET") && path.equals("/users")) {
+                json = "{\"status\":\"UP\"}";
+
+            }
+            else if (method.equals("GET") && path.equals("/users")) {
 
                 List<User> users =
                         userRepository.findAll();
